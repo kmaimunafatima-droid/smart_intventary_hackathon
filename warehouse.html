@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StockSense - Warehouse</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #1f2937;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 277px;
+    height: 100vh;
+    background: #172033;
+    padding: 30px 16px;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    padding: 0 28px;
+    margin-bottom: 45px;
+}
+
+.logo span {
+    color: #4f8cff;
+}
+
+.menu a {
+    display: block;
+    text-decoration: none;
+    color: #dbe5f5;
+    padding: 14px 20px;
+    margin: 6px 0;
+    border-radius: 9px;
+    font-size: 20px;
+}
+
+.menu a:hover,
+.menu a.active {
+    background: #33415f;
+    color: white;
+}
+
+.main {
+    margin-left: 277px;
+    padding: 35px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.topbar h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+.topbar p {
+    color: #6b7280;
+}
+
+.profile {
+    background: white;
+    padding: 12px 18px;
+    border-radius: 10px;
+}
+
+.panel {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+}
+
+.panel h2 {
+    margin-top: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #f4f7fb;
+    text-align: left;
+    padding: 14px;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.status {
+    background: #e8f7ee;
+    color: #15803d;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <div class="logo">
+        Stock<span>Sense</span>
+    </div>
+
+    <div class="menu">
+
+        <a href="dashboard.html">🏠 Dashboard</a>
+
+        <a href="products.html">📦 Products</a>
+
+        <a href="receipts.html">📥 Receipts</a>
+
+        <a href="deliveries.html">📤 Deliveries</a>
+
+        <a href="transfers.html">🔄 Transfers</a>
+
+        <a href="adjustments.html">📝 Adjustments</a>
+
+        <a href="ledger.html">📊 Stock Ledger</a>
+
+        <a href="warehouse.html" class="active">🏭 Warehouse</a>
+
+    </div>
+</div>
+
+
+<div class="main">
+
+    <div class="topbar">
+
+        <div>
+            <h1>Warehouse</h1>
+            <p>View warehouse locations and available stock.</p>
+        </div>
+
+        <div class="profile">
+            Inventory Manager
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>Warehouse Locations</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Warehouse</th>
+                    <th>Location</th>
+                    <th>Products</th>
+                    <th>Stock Quantity</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Main Warehouse</td>
+                    <td>Hyderabad</td>
+                    <td>520</td>
+                    <td>750</td>
+                    <td>
+                        <span class="status">Active</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Production Rack</td>
+                    <td>Factory Floor</td>
+                    <td>430</td>
+                    <td>350</td>
+                    <td>
+                        <span class="status">Active</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Finished Goods</td>
+                    <td>Warehouse B</td>
+                    <td>300</td>
+                    <td>150</td>
+                    <td>
+                        <span class="status">Active</span>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

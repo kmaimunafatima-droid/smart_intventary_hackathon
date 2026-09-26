@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StockSense - Receipts</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #1f2937;
+}
+
+/* SIDEBAR */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 277px;
+    height: 100vh;
+    background: #172033;
+    padding: 30px 16px;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    padding: 0 28px;
+    margin-bottom: 45px;
+}
+
+.logo span {
+    color: #4f8cff;
+}
+
+.menu a {
+    display: block;
+    text-decoration: none;
+    color: #dbe5f5;
+    padding: 14px 20px;
+    margin: 6px 0;
+    border-radius: 9px;
+    font-size: 20px;
+}
+
+.menu a:hover,
+.menu a.active {
+    background: #33415f;
+    color: white;
+}
+
+/* MAIN */
+.main {
+    margin-left: 277px;
+    padding: 35px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.topbar h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+.topbar p {
+    margin-top: 7px;
+    color: #6b7280;
+}
+
+.profile {
+    background: white;
+    padding: 12px 18px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+/* PANEL */
+.panel {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
+}
+
+.panel h2 {
+    margin-top: 0;
+}
+
+/* FORM */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+button {
+    margin-top: 20px;
+    background: #4f8cff;
+    color: white;
+    border: none;
+    padding: 11px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #3978e8;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #f4f7fb;
+    text-align: left;
+    padding: 14px;
+}
+
+td {
+    padding: 15px 14px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.status {
+    background: #e8f7ee;
+    color: #15803d;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* STOCK MESSAGE */
+.stock-message {
+    margin-top: 20px;
+    padding: 12px 15px;
+    border-radius: 8px;
+    background: #eef6ff;
+    color: #2563eb;
+    display: none;
+    font-weight: bold;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 220px;
+    }
+
+    .main {
+        margin-left: 220px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+    <div class="logo">
+        Stock<span>Sense</span>
+    </div>
+
+    <div class="menu">
+
+        <a href="dashboard.html">
+            🏠 Dashboard
+        </a>
+
+        <a href="products.html">
+            📦 Products
+        </a>
+
+        <a href="receipts.html" class="active">
+            📥 Receipts
+        </a>
+
+        <a href="deliveries.html">
+            📤 Deliveries
+        </a>
+
+        <a href="transfers.html">
+            🔄 Transfers
+        </a>
+
+        <a href="adjustments.html">
+            📝 Adjustments
+        </a>
+
+        <a href="ledger.html">
+            📊 Stock Ledger
+        </a>
+
+        <a href="warehouse.html">
+            🏭 Warehouse
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="main">
+
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <div>
+
+            <h1>Receipts</h1>
+
+            <p>
+                Receive products and increase available stock.
+            </p>
+
+        </div>
+
+        <div class="profile">
+            Inventory Manager
+        </div>
+
+    </div>
+
+
+    <!-- CREATE RECEIPT -->
+
+    <div class="panel">
+
+        <h2>
+            Create Receipt
+        </h2>
+
+
+        <div class="form-grid">
+
+
+            <!-- SUPPLIER -->
+
+            <div>
+
+                <label>
+                    Supplier
+                </label>
+
+                <input
+                    type="text"
+                    id="supplier"
+                    placeholder="Enter supplier name"
+                    maxlength="100"
+                >
+
+            </div>
+
+
+            <!-- PRODUCT -->
+
+            <div>
+
+                <label>
+                    Product
+                </label>
+
+                <select id="product">
+
+                    <option value="">
+                        Select product
+                    </option>
+
+                    <option value="Steel Rods">
+                        Steel Rods
+                    </option>
+
+                    <option value="Office Chairs">
+                        Office Chairs
+                    </option>
+
+                    <option value="Wooden Tables">
+                        Wooden Tables
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- QUANTITY -->
+
+            <div>
+
+                <label>
+                    Quantity
+                </label>
+
+                <input
+                    type="number"
+                    id="quantity"
+                    min="1"
+                    step="any"
+                    placeholder="Enter quantity"
+                >
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            onclick="validateReceipt()"
+        >
+            Validate Receipt
+        </button>
+
+
+        <!-- STOCK MESSAGE -->
+
+        <div
+            id="stockMessage"
+            class="stock-message"
+        ></div>
+
+    </div>
+
+
+    <!-- RECEIPT RECORDS -->
+
+    <div class="panel">
+
+        <h2>
+            Receipt Records
+        </h2>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Supplier
+                    </th>
+
+                    <th>
+                        Product
+                    </th>
+
+                    <th>
+                        Quantity
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="receiptTable">
+
+                <tr>
+
+                    <td>
+                        ABC Suppliers
+                    </td>
+
+                    <td>
+                        Steel Rods
+                    </td>
+
+                    <td>
+                        100
+                    </td>
+
+                    <td>
+
+                        <span class="status">
+                            Validated
+                        </span>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+    StockSense Receipt System
+
+    Stock is stored in localStorage so that
+    validated receipts can increase the
+    product's available stock.
+*/
+
+
+/* INITIAL PRODUCT STOCK */
+
+const defaultStock = {
+
+    "Steel Rods": 100,
+
+    "Office Chairs": 50,
+
+    "Wooden Tables": 25
+
+};
+
+
+/* GET CURRENT STOCK */
+
+function getStock(product) {
+
+    const savedStock =
+        localStorage.getItem(
+            "stocksenseStock_" + product
+        );
+
+
+    if (savedStock !== null) {
+
+        const number =
+            Number(savedStock);
+
+
+        if (Number.isFinite(number)) {
+            return number;
+        }
+
+    }
+
+
+    return defaultStock[product] || 0;
+}
+
+
+/* SAVE STOCK */
+
+function saveStock(product, stock) {
+
+    localStorage.setItem(
+        "stocksenseStock_" + product,
+        String(stock)
+    );
+
+}
+
+
+/* VALIDATE RECEIPT */
+
+function validateReceipt() {
+
+
+    const supplier =
+        document
+        .getElementById("supplier")
+        .value
+        .trim();
+
+
+    const product =
+        document
+        .getElementById("product")
+        .value;
+
+
+    const quantityValue =
+        document
+        .getElementById("quantity")
+        .value
+        .trim();
+
+
+    /* HIDE OLD MESSAGE */
+
+    const stockMessage =
+        document.getElementById(
+            "stockMessage"
+        );
+
+
+    stockMessage.style.display =
+        "none";
+
+
+    /* REQUIRED FIELD CHECK */
+
+    if (
+        !supplier ||
+        !product ||
+        quantityValue === ""
+    ) {
+
+        alert(
+            "Please fill all receipt details."
+        );
+
+        return;
+    }
+
+
+    /* CONVERT QUANTITY */
+
+    const quantity =
+        Number(quantityValue);
+
+
+    /* QUANTITY VALIDATION */
+
+    if (
+        !Number.isFinite(quantity) ||
+        quantity <= 0
+    ) {
+
+        alert(
+            "Quantity must be greater than 0."
+        );
+
+        return;
+    }
+
+
+    /* GET CURRENT STOCK */
+
+    const oldStock =
+        getStock(product);
+
+
+    /* CALCULATE NEW STOCK */
+
+    const newStock =
+        oldStock + quantity;
+
+
+    /* SAVE NEW STOCK */
+
+    saveStock(
+        product,
+        newStock
+    );
+
+
+    /* ADD RECEIPT TO TABLE */
+
+    const table =
+        document.getElementById(
+            "receiptTable"
+        );
+
+
+    const row =
+        table.insertRow();
+
+
+    const supplierCell =
+        row.insertCell();
+
+
+    const productCell =
+        row.insertCell();
+
+
+    const quantityCell =
+        row.insertCell();
+
+
+    const statusCell =
+        row.insertCell();
+
+
+    supplierCell.textContent =
+        supplier;
+
+
+    productCell.textContent =
+        product;
+
+
+    quantityCell.textContent =
+        quantity;
+
+
+    const status =
+        document.createElement(
+            "span"
+        );
+
+
+    status.className =
+        "status";
+
+
+    status.textContent =
+        "Validated";
+
+
+    statusCell.appendChild(
+        status
+    );
+
+
+    /*
+        SAVE RECEIPT FOR STOCK LEDGER
+    */
+
+    saveLedgerEntry(
+        product,
+        quantity
+    );
+
+
+    /* SHOW STOCK UPDATE */
+
+    stockMessage.textContent =
+        product +
+        " stock increased from " +
+        oldStock +
+        " to " +
+        newStock +
+        ".";
+
+
+    stockMessage.style.display =
+        "block";
+
+
+    /* CLEAR FORM */
+
+    document.getElementById(
+        "supplier"
+    ).value = "";
+
+
+    document.getElementById(
+        "product"
+    ).value = "";
+
+
+    document.getElementById(
+        "quantity"
+    ).value = "";
+
+}
+
+
+/* SAVE LEDGER ENTRY */
+
+function saveLedgerEntry(
+    product,
+    quantity
+) {
+
+
+    const existingLedger =
+        localStorage.getItem(
+            "stocksenseLedger"
+        );
+
+
+    let ledger = [];
+
+
+    if (existingLedger) {
+
+        try {
+
+            ledger =
+                JSON.parse(
+                    existingLedger
+                );
+
+        } catch (error) {
+
+            ledger = [];
+
+        }
+
+    }
+
+
+    const today =
+        new Date();
+
+
+    const date =
+        today.getDate() +
+        " " +
+        today.toLocaleString(
+            "en-US",
+            {
+                month: "short"
+            }
+        ) +
+        " " +
+        today.getFullYear();
+
+
+    ledger.push({
+
+        date: date,
+
+        product: product,
+
+        movement: "Receipt",
+
+        quantity: "+" + quantity,
+
+        reference: "Receipt"
+
+    });
+
+
+    localStorage.setItem(
+        "stocksenseLedger",
+        JSON.stringify(ledger)
+    );
+
+}
+
+</script>
+
+</body>
+</html>

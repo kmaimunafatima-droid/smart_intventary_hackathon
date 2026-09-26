@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StockSense - Products</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 230px;
+            height: 100vh;
+            background: #172033;
+            color: white;
+            padding: 25px 15px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo span {
+            color: #4f8cff;
+        }
+
+        .menu a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 13px 15px;
+            margin: 6px 0;
+            border-radius: 8px;
+        }
+
+        .menu a:hover,
+        .menu .active {
+            background: #2d3b55;
+            color: white;
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 230px;
+            padding: 35px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            font-size: 30px;
+        }
+
+        .topbar p {
+            margin-top: 7px;
+            color: #6b7280;
+        }
+
+        /* ADD BUTTON */
+        .add-btn {
+            background: #4f8cff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .add-btn:hover {
+            background: #3575df;
+        }
+
+        /* FORM */
+        .form-card {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .form-card h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d8dee9;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .form-buttons {
+            margin-top: 20px;
+        }
+
+        .save-btn {
+            background: #4f8cff;
+            color: white;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .save-btn:hover {
+            background: #3575df;
+        }
+
+        .cancel-btn {
+            background: #e5e7eb;
+            color: #374151;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        /* EDIT BUTTON */
+        .edit-btn {
+            background: #4f8cff;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .edit-btn:hover {
+            background: #3575df;
+        }
+
+        /* SEARCH */
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d8dee9;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        /* TABLE */
+        .table-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f1f5f9;
+            text-align: left;
+            padding: 15px;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #edf0f5;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .stock {
+            font-weight: bold;
+        }
+
+        .good {
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        .low {
+            color: #f59e0b;
+            font-weight: bold;
+        }
+
+        .reorder {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .normal {
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1100px) {
+
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+                width: 190px;
+            }
+
+            .main {
+                margin-left: 190px;
+                padding: 20px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            Stock<span>Sense</span>
+        </div>
+
+        <div class="menu">
+
+            <a href="dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="products.html" class="active">
+                📦 Products
+            </a>
+
+            <a href="receipts.html">
+                📥 Receipts
+            </a>
+
+            <a href="deliveries.html">
+                📤 Deliveries
+            </a>
+
+            <a href="transfers.html">
+                🔄 Transfers
+            </a>
+
+            <a href="adjustments.html">
+                📝 Adjustments
+            </a>
+
+            <a href="ledger.html">
+                📊 Stock Ledger
+            </a>
+
+            <a href="warehouse.html">
+                🏭 Warehouse
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <div>
+
+                <h1>Products</h1>
+
+                <p>
+                    Manage your inventory products
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="add-btn"
+                onclick="showAddProduct()"
+            >
+                + Add Product
+            </button>
+
+        </div>
+
+
+        <!-- PRODUCT FORM -->
+
+        <div
+            class="form-card"
+            id="productForm"
+        >
+
+            <h2 id="formTitle">
+                Add Product
+            </h2>
+
+
+            <div class="form-grid">
+
+                <!-- PRODUCT NAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        Product Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productName"
+                        placeholder="Enter product name"
+                        maxlength="100"
+                    >
+
+                </div>
+
+
+                <!-- SKU -->
+
+                <div class="form-group">
+
+                    <label>
+                        SKU / Code
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productSKU"
+                        placeholder="Enter SKU"
+                        maxlength="50"
+                    >
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="form-group">
+
+                    <label>
+                        Category
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productCategory"
+                        placeholder="Enter category"
+                        maxlength="50"
+                    >
+
+                </div>
+
+
+                <!-- UNIT -->
+
+                <div class="form-group">
+
+                    <label>
+                        Unit
+                    </label>
+
+                    <select id="productUnit">
+
+                        <option value="">
+                            Select unit
+                        </option>
+
+                        <option value="pcs">
+                            pcs
+                        </option>
+
+                        <option value="kg">
+                            kg
+                        </option>
+
+                        <option value="litre">
+                            litre
+                        </option>
+
+                        <option value="box">
+                            box
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- CURRENT STOCK -->
+
+                <div class="form-group">
+
+                    <label>
+                        Current Stock
+                    </label>
+
+                    <input
+                        type="number"
+                        id="initialStock"
+                        min="0"
+                        step="any"
+                        placeholder="Enter stock"
+                    >
+
+                </div>
+
+
+                <!-- MINIMUM STOCK -->
+
+                <div class="form-group">
+
+                    <label>
+                        Minimum Stock Level
+                    </label>
+
+                    <input
+                        type="number"
+                        id="minimumStock"
+                        min="0"
+                        step="any"
+                        placeholder="Example: 25"
+                    >
+
+                </div>
+
+
+                <!-- REORDER QUANTITY -->
+
+                <div class="form-group">
+
+                    <label>
+                        Reorder Quantity
+                    </label>
+
+                    <input
+                        type="number"
+                        id="reorderQuantity"
+                        min="1"
+                        step="any"
+                        placeholder="Example: 50"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-buttons">
+
+                <button
+                    type="button"
+                    class="save-btn"
+                    id="formButton"
+                    onclick="saveProduct()"
+                >
+                    Add Product
+                </button>
+
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="cancelForm()"
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="🔍 Search products by name or SKU..."
+                onkeyup="searchProducts()"
+            >
+
+        </div>
+
+
+        <!-- PRODUCT TABLE -->
+
+        <div class="table-card">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Product Name
+                        </th>
+
+                        <th>
+                            SKU
+                        </th>
+
+                        <th>
+                            Category
+                        </th>
+
+                        <th>
+                            Unit
+                        </th>
+
+                        <th>
+                            Stock
+                        </th>
+
+                        <th>
+                            Min Stock
+                        </th>
+
+                        <th>
+                            Reorder Qty
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Reorder
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="productTable">
+
+                    <!-- STEEL RODS -->
+
+                    <tr>
+
+                        <td>
+                            Steel Rods
+                        </td>
+
+                        <td>
+                            ST-001
+                        </td>
+
+                        <td>
+                            Raw Material
+                        </td>
+
+                        <td>
+                            kg
+                        </td>
+
+                        <td class="stock">
+                            100
+                        </td>
+
+                        <td>
+                            25
+                        </td>
+
+                        <td>
+                            50
+                        </td>
+
+                        <td class="good">
+                            ● In Stock
+                        </td>
+
+                        <td class="normal">
+                            ✓ Not Needed
+                        </td>
+
+                        <td>
+
+                            <button
+                                type="button"
+                                class="edit-btn"
+                                onclick="editProduct(this)"
+                            >
+                                Edit
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- OFFICE CHAIRS -->
+
+                    <tr>
+
+                        <td>
+                            Office Chairs
+                        </td>
+
+                        <td>
+                            CH-001
+                        </td>
+
+                        <td>
+                            Furniture
+                        </td>
+
+                        <td>
+                            pcs
+                        </td>
+
+                        <td class="stock">
+                            50
+                        </td>
+
+                        <td>
+                            20
+                        </td>
+
+                        <td>
+                            40
+                        </td>
+
+                        <td class="good">
+                            ● In Stock
+                        </td>
+
+                        <td class="normal">
+                            ✓ Not Needed
+                        </td>
+
+                        <td>
+
+                            <button
+                                type="button"
+                                class="edit-btn"
+                                onclick="editProduct(this)"
+                            >
+                                Edit
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- WOODEN TABLES -->
+
+                    <tr>
+
+                        <td>
+                            Wooden Tables
+                        </td>
+
+                        <td>
+                            TB-001
+                        </td>
+
+                        <td>
+                            Furniture
+                        </td>
+
+                        <td>
+                            pcs
+                        </td>
+
+                        <td class="stock">
+                            25
+                        </td>
+
+                        <td>
+                            25
+                        </td>
+
+                        <td>
+                            50
+                        </td>
+
+                        <td class="low">
+                            ● Low Stock
+                        </td>
+
+                        <td class="reorder">
+                            ⚠ Reorder Needed
+                        </td>
+
+                        <td>
+
+                            <button
+                                type="button"
+                                class="edit-btn"
+                                onclick="editProduct(this)"
+                            >
+                                Edit
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /* CURRENT ROW BEING EDITED */
+
+        let editingRow = null;
+
+
+        /* ALLOWED UNITS */
+
+        const allowedUnits = [
+            "pcs",
+            "kg",
+            "litre",
+            "box"
+        ];
+
+
+        /* SHOW ADD FORM */
+
+        function showAddProduct() {
+
+            editingRow = null;
+
+            document.getElementById(
+                "formTitle"
+            ).innerText = "Add Product";
+
+            document.getElementById(
+                "formButton"
+            ).innerText = "Add Product";
+
+            clearForm();
+
+            document.getElementById(
+                "productForm"
+            ).style.display = "block";
+
+            document.getElementById(
+                "productName"
+            ).focus();
+        }
+
+
+        /* EDIT PRODUCT */
+
+        function editProduct(button) {
+
+            const row =
+                button.closest("tr");
+
+
+            if (!row) {
+                return;
+            }
+
+
+            editingRow = row;
+
+
+            document.getElementById(
+                "formTitle"
+            ).innerText = "Edit Product";
+
+
+            document.getElementById(
+                "formButton"
+            ).innerText = "Update Product";
+
+
+            document.getElementById(
+                "productName"
+            ).value =
+                row.cells[0].textContent.trim();
+
+
+            document.getElementById(
+                "productSKU"
+            ).value =
+                row.cells[1].textContent.trim();
+
+
+            document.getElementById(
+                "productCategory"
+            ).value =
+                row.cells[2].textContent.trim();
+
+
+            document.getElementById(
+                "productUnit"
+            ).value =
+                row.cells[3].textContent.trim();
+
+
+            document.getElementById(
+                "initialStock"
+            ).value =
+                row.cells[4].textContent.trim();
+
+
+            document.getElementById(
+                "minimumStock"
+            ).value =
+                row.cells[5].textContent.trim();
+
+
+            document.getElementById(
+                "reorderQuantity"
+            ).value =
+                row.cells[6].textContent.trim();
+
+
+            document.getElementById(
+                "productForm"
+            ).style.display = "block";
+
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+
+            document.getElementById(
+                "productName"
+            ).focus();
+        }
+
+
+        /* SAVE PRODUCT */
+
+        function saveProduct() {
+
+            const name =
+                document.getElementById(
+                    "productName"
+                ).value.trim();
+
+
+            const sku =
+                document.getElementById(
+                    "productSKU"
+                ).value.trim();
+
+
+            const category =
+                document.getElementById(
+                    "productCategory"
+                ).value.trim();
+
+
+            const unit =
+                document.getElementById(
+                    "productUnit"
+                ).value;
+
+
+            const stockValue =
+                document.getElementById(
+                    "initialStock"
+                ).value.trim();
+
+
+            const minimumStockValue =
+                document.getElementById(
+                    "minimumStock"
+                ).value.trim();
+
+
+            const reorderQuantityValue =
+                document.getElementById(
+                    "reorderQuantity"
+                ).value.trim();
+
+
+            /* REQUIRED FIELDS */
+
+            if (
+                !name ||
+                !sku ||
+                !category ||
+                !unit ||
+                stockValue === "" ||
+                minimumStockValue === "" ||
+                reorderQuantityValue === ""
+            ) {
+
+                alert(
+                    "Please fill all product details."
+                );
+
+                return;
+            }
+
+
+            /* UNIT VALIDATION */
+
+            if (
+                !allowedUnits.includes(unit)
+            ) {
+
+                alert(
+                    "Please select a valid unit."
+                );
+
+                return;
+            }
+
+
+            /* NUMBER CONVERSION */
+
+            const stock =
+                Number(stockValue);
+
+
+            const minimumStock =
+                Number(minimumStockValue);
+
+
+            const reorderQuantity =
+                Number(reorderQuantityValue);
+
+
+            /* STOCK VALIDATION */
+
+            if (
+                !Number.isFinite(stock) ||
+                stock < 0
+            ) {
+
+                alert(
+                    "Please enter a valid stock quantity."
+                );
+
+                return;
+            }
+
+
+            /* MINIMUM STOCK VALIDATION */
+
+            if (
+                !Number.isFinite(minimumStock) ||
+                minimumStock < 0
+            ) {
+
+                alert(
+                    "Minimum stock level cannot be negative."
+                );
+
+                return;
+            }
+
+
+            /* REORDER QUANTITY VALIDATION */
+
+            if (
+                !Number.isFinite(reorderQuantity) ||
+                reorderQuantity <= 0
+            ) {
+
+                alert(
+                    "Reorder quantity must be greater than 0."
+                );
+
+                return;
+            }
+
+
+            /* SKU VALIDATION */
+
+            const skuPattern =
+                /^[A-Za-z0-9_-]+$/;
+
+
+            if (
+                !skuPattern.test(sku)
+            ) {
+
+                alert(
+                    "SKU can contain only letters, numbers, hyphens and underscores."
+                );
+
+                return;
+            }
+
+
+            /* DUPLICATE SKU CHECK */
+
+            const rows =
+                document
+                .getElementById(
+                    "productTable"
+                )
+                .rows;
+
+
+            for (
+                let i = 0;
+                i < rows.length;
+                i++
+            ) {
+
+                const row = rows[i];
+
+
+                if (
+                    row === editingRow
+                ) {
+                    continue;
+                }
+
+
+                const existingSKU =
+                    row.cells[1]
+                    .textContent
+                    .trim()
+                    .toLowerCase();
+
+
+                if (
+                    existingSKU ===
+                    sku.toLowerCase()
+                ) {
+
+                    alert(
+                        "This SKU already exists. Please use a different SKU."
+                    );
+
+                    return;
+                }
+
+            }
+
+
+            /* STOCK STATUS */
+
+            const isLowStock =
+                stock <= minimumStock;
+
+
+            const statusText =
+                isLowStock
+                    ? "● Low Stock"
+                    : "● In Stock";
+
+
+            const statusClass =
+                isLowStock
+                    ? "low"
+                    : "good";
+
+
+            /* REORDER STATUS */
+
+            const reorderNeeded =
+                stock <= minimumStock;
+
+
+            const reorderText =
+                reorderNeeded
+                    ? "⚠ Reorder Needed"
+                    : "✓ Not Needed";
+
+
+            const reorderClass =
+                reorderNeeded
+                    ? "reorder"
+                    : "normal";
+
+
+            /* UPDATE EXISTING PRODUCT */
+
+            if (editingRow) {
+
+                editingRow.cells[0]
+                    .textContent = name;
+
+
+                editingRow.cells[1]
+                    .textContent = sku;
+
+
+                editingRow.cells[2]
+                    .textContent = category;
+
+
+                editingRow.cells[3]
+                    .textContent = unit;
+
+
+                editingRow.cells[4]
+                    .textContent = stock;
+
+
+                editingRow.cells[4]
+                    .className = "stock";
+
+
+                editingRow.cells[5]
+                    .textContent = minimumStock;
+
+
+                editingRow.cells[6]
+                    .textContent = reorderQuantity;
+
+
+                editingRow.cells[7]
+                    .textContent = statusText;
+
+
+                editingRow.cells[7]
+                    .className = statusClass;
+
+
+                editingRow.cells[8]
+                    .textContent = reorderText;
+
+
+                editingRow.cells[8]
+                    .className = reorderClass;
+
+
+                alert(
+                    "Product updated successfully."
+                );
+
+            }
+
+
+            /* ADD NEW PRODUCT */
+
+            else {
+
+                const table =
+                    document.getElementById(
+                        "productTable"
+                    );
+
+
+                const row =
+                    table.insertRow();
+
+
+                /*
+                 * Use textContent rather than innerHTML
+                 * for user-entered data.
+                 */
+
+                const nameCell =
+                    row.insertCell();
+
+
+                const skuCell =
+                    row.insertCell();
+
+
+                const categoryCell =
+                    row.insertCell();
+
+
+                const unitCell =
+                    row.insertCell();
+
+
+                const stockCell =
+                    row.insertCell();
+
+
+                const minimumCell =
+                    row.insertCell();
+
+
+                const reorderQuantityCell =
+                    row.insertCell();
+
+
+                const statusCell =
+                    row.insertCell();
+
+
+                const reorderCell =
+                    row.insertCell();
+
+
+                const actionCell =
+                    row.insertCell();
+
+
+                nameCell.textContent =
+                    name;
+
+
+                skuCell.textContent =
+                    sku;
+
+
+                categoryCell.textContent =
+                    category;
+
+
+                unitCell.textContent =
+                    unit;
+
+
+                stockCell.textContent =
+                    stock;
+
+                stockCell.className =
+                    "stock";
+
+
+                minimumCell.textContent =
+                    minimumStock;
+
+
+                reorderQuantityCell.textContent =
+                    reorderQuantity;
+
+
+                statusCell.textContent =
+                    statusText;
+
+                statusCell.className =
+                    statusClass;
+
+
+                reorderCell.textContent =
+                    reorderText;
+
+                reorderCell.className =
+                    reorderClass;
+
+
+                /* CREATE EDIT BUTTON */
+
+                const editButton =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                editButton.type =
+                    "button";
+
+
+                editButton.className =
+                    "edit-btn";
+
+
+                editButton.textContent =
+                    "Edit";
+
+
+                editButton.addEventListener(
+                    "click",
+                    function () {
+
+                        editProduct(this);
+
+                    }
+                );
+
+
+                actionCell.appendChild(
+                    editButton
+                );
+
+
+                alert(
+                    "Product added successfully."
+                );
+            }
+
+
+            /* RESET FORM */
+
+            clearForm();
+
+            editingRow = null;
+
+
+            document.getElementById(
+                "productForm"
+            ).style.display = "none";
+        }
+
+
+        /* CLEAR FORM */
+
+        function clearForm() {
+
+            document.getElementById(
+                "productName"
+            ).value = "";
+
+
+            document.getElementById(
+                "productSKU"
+            ).value = "";
+
+
+            document.getElementById(
+                "productCategory"
+            ).value = "";
+
+
+            document.getElementById(
+                "productUnit"
+            ).value = "";
+
+
+            document.getElementById(
+                "initialStock"
+            ).value = "";
+
+
+            document.getElementById(
+                "minimumStock"
+            ).value = "";
+
+
+            document.getElementById(
+                "reorderQuantity"
+            ).value = "";
+        }
+
+
+        /* CANCEL */
+
+        function cancelForm() {
+
+            clearForm();
+
+            editingRow = null;
+
+
+            document.getElementById(
+                "productForm"
+            ).style.display = "none";
+        }
+
+
+        /* SEARCH */
+
+        function searchProducts() {
+
+            const search =
+                document.getElementById(
+                    "searchInput"
+                )
+                .value
+                .trim()
+                .toLowerCase();
+
+
+            const rows =
+                document
+                .getElementById(
+                    "productTable"
+                )
+                .getElementsByTagName(
+                    "tr"
+                );
+
+
+            for (
+                let i = 0;
+                i < rows.length;
+                i++
+            ) {
+
+                const productName =
+                    rows[i]
+                    .cells[0]
+                    .textContent
+                    .toLowerCase();
+
+
+                const sku =
+                    rows[i]
+                    .cells[1]
+                    .textContent
+                    .toLowerCase();
+
+
+                if (
+                    productName.includes(search) ||
+                    sku.includes(search)
+                ) {
+
+                    rows[i].style.display = "";
+
+                } else {
+
+                    rows[i].style.display = "none";
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StockSense - Transfers</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 300px;
+            height: 100vh;
+            background: #172033;
+            padding: 38px 34px;
+        }
+
+        .logo {
+            font-size: 38px;
+            font-weight: bold;
+            color: white;
+            padding: 0 35px;
+            margin-bottom: 55px;
+        }
+
+        .logo span {
+            color: #4f8cff;
+        }
+
+        .menu a {
+            display: block;
+            text-decoration: none;
+            color: #dbe5f5;
+            padding: 17px 28px;
+            margin: 6px 0;
+            border-radius: 10px;
+            font-size: 22px;
+            white-space: nowrap;
+        }
+
+        /* ACTIVE MENU */
+        .menu a:hover,
+        .menu a.active {
+            background: #394b70;
+            color: white;
+            margin-left: -12px;
+            margin-right: -12px;
+            padding-left: 40px;
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 300px;
+            padding: 45px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .topbar h1 {
+            margin: 0;
+            font-size: 34px;
+        }
+
+        .topbar p {
+            margin: 8px 0 0;
+            color: #6b7280;
+            font-size: 18px;
+        }
+
+        .profile {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            font-size: 17px;
+        }
+
+        /* PANEL */
+        .panel {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .panel h2 {
+            margin: 0 0 25px;
+            font-size: 25px;
+        }
+
+        /* FORM */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 9px;
+            font-size: 16px;
+        }
+
+        .button-row {
+            margin-top: 25px;
+        }
+
+        button {
+            background: #4f8cff;
+            color: white;
+            border: none;
+            padding: 13px 25px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #3978e8;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f4f7fb;
+            text-align: left;
+            padding: 16px;
+            font-size: 16px;
+            color: #374151;
+        }
+
+        td {
+            padding: 18px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 16px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 20px;
+            background: #e8f7ee;
+            color: #15803d;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="logo">
+            Stock<span>Sense</span>
+        </div>
+
+        <div class="menu">
+
+            <a href="dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="products.html">
+                📦 Products
+            </a>
+
+            <a href="receipts.html">
+                📥 Receipts
+            </a>
+
+            <a href="deliveries.html">
+                📤 Deliveries
+            </a>
+
+            <a href="transfers.html" class="active">
+                🔄 Transfers
+            </a>
+
+            <a href="adjustments.html">
+                📝 Adjustments
+            </a>
+
+            <a href="ledger.html">
+                📊 Stock Ledger
+            </a>
+
+            <a href="settings.html">
+                ⚙️ Settings
+            </a>
+
+            <a href="warehouse.html">
+                🏭 Warehouse
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+        <div class="topbar">
+
+            <div>
+                <h1>Internal Transfers</h1>
+                <p>Move stock between warehouses and locations.</p>
+            </div>
+
+            <div class="profile">
+                Inventory Manager
+            </div>
+
+        </div>
+
+
+        <!-- CREATE TRANSFER -->
+        <div class="panel">
+
+            <h2>Create Transfer</h2>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>From Warehouse</label>
+
+                    <select id="fromWarehouse">
+                        <option value="">Select warehouse</option>
+                        <option>Main Warehouse</option>
+                        <option>Production Rack</option>
+                        <option>Finished Goods</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label>To Warehouse</label>
+
+                    <select id="toWarehouse">
+                        <option value="">Select warehouse</option>
+                        <option>Main Warehouse</option>
+                        <option>Production Rack</option>
+                        <option>Finished Goods</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label>Product</label>
+
+                    <select id="product">
+                        <option value="">Select product</option>
+                        <option>Steel Rods</option>
+                        <option>Copper Wire</option>
+                        <option>Aluminium Sheets</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label>Quantity</label>
+
+                    <input
+                        type="number"
+                        id="quantity"
+                        min="1"
+                        placeholder="Enter quantity"
+                    >
+                </div>
+
+            </div>
+
+
+            <div class="button-row">
+
+                <button onclick="createTransfer()">
+                    Create Transfer
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- TRANSFER RECORDS -->
+        <div class="panel">
+
+            <h2>Transfer Records</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="transferTable">
+
+                    <tr>
+                        <td>Main Warehouse</td>
+                        <td>Production Rack</td>
+                        <td>Steel Rods</td>
+                        <td>50</td>
+                        <td>
+                            <span class="status">
+                                Scheduled
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Production Rack</td>
+                        <td>Finished Goods</td>
+                        <td>Copper Wire</td>
+                        <td>30</td>
+                        <td>
+                            <span class="status">
+                                Scheduled
+                            </span>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function createTransfer() {
+
+            const from =
+                document.getElementById("fromWarehouse").value;
+
+            const to =
+                document.getElementById("toWarehouse").value;
+
+            const product =
+                document.getElementById("product").value;
+
+            const quantity =
+                document.getElementById("quantity").value;
+
+
+            if (!from || !to || !product || !quantity) {
+
+                alert("Please fill all transfer details.");
+
+                return;
+            }
+
+
+            if (from === to) {
+
+                alert("From and To warehouse cannot be the same.");
+
+                return;
+            }
+
+
+            const table =
+                document.getElementById("transferTable");
+
+            const row =
+                table.insertRow();
+
+
+            row.innerHTML = `
+                <td>${from}</td>
+                <td>${to}</td>
+                <td>${product}</td>
+                <td>${quantity}</td>
+                <td>
+                    <span class="status">
+                        Scheduled
+                    </span>
+                </td>
+            `;
+
+
+            document.getElementById("fromWarehouse").value = "";
+            document.getElementById("toWarehouse").value = "";
+            document.getElementById("product").value = "";
+            document.getElementById("quantity").value = "";
+        }
+
+    </script>
+
+</body>
+</html>
