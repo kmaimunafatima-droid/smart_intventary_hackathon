@@ -894,4 +894,635 @@ Smart inventory management system built for the Odoo Hackathon.
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StockSense - Products</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 230px;
+            height: 100vh;
+            background: #172033;
+            color: white;
+            padding: 25px 15px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo span {
+            color: #4f8cff;
+        }
+
+        .menu a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 13px 15px;
+            margin: 6px 0;
+            border-radius: 8px;
+        }
+
+        .menu a:hover,
+        .menu .active {
+            background: #2d3b55;
+            color: white;
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 230px;
+            padding: 35px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            font-size: 30px;
+        }
+
+        .topbar p {
+            margin-top: 7px;
+            color: #6b7280;
+        }
+
+        /* ADD BUTTON */
+        .add-btn {
+            background: #4f8cff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .add-btn:hover {
+            background: #3575df;
+        }
+
+        /* ADD PRODUCT FORM */
+        .form-card {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .form-card h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d8dee9;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .form-buttons {
+            margin-top: 20px;
+        }
+
+        .save-btn {
+            background: #4f8cff;
+            color: white;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .cancel-btn {
+            background: #e5e7eb;
+            color: #374151;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        /* SEARCH */
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d8dee9;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        /* TABLE */
+        .table-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f1f5f9;
+            text-align: left;
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #edf0f5;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .stock {
+            font-weight: bold;
+        }
+
+        .good {
+            color: #16a34a;
+        }
+
+        .low {
+            color: #f59e0b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="logo">
+            Stock<span>Sense</span>
+        </div>
+
+        <div class="menu">
+
+            <a href="dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="products.html" class="active">
+                📦 Products
+            </a>
+
+            <a href="receipts.html">
+                📥 Receipts
+            </a>
+
+            <a href="deliveries.html">
+                📤 Deliveries
+            </a>
+
+            <a href="transfers.html">
+                🔄 Transfers
+            </a>
+
+            <a href="adjustments.html">
+                📝 Adjustments
+            </a>
+
+            <a href="ledger.html">
+                📊 Stock Ledger
+            </a>
+
+            <a href="warehouse.html">
+                🏭 Warehouse
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+
+            <div>
+                <h1>Products</h1>
+                <p>Manage your inventory products</p>
+            </div>
+
+            <button class="add-btn" onclick="showAddProduct()">
+                + Add Product
+            </button>
+
+        </div>
+
+
+        <!-- ADD PRODUCT FORM -->
+        <div class="form-card" id="addProductForm">
+
+            <h2>Add Product</h2>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Product Name</label>
+
+                    <input
+                        type="text"
+                        id="productName"
+                        placeholder="Enter product name"
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label>SKU / Code</label>
+
+                    <input
+                        type="text"
+                        id="productSKU"
+                        placeholder="Enter SKU"
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label>Category</label>
+
+                    <input
+                        type="text"
+                        id="productCategory"
+                        placeholder="Enter category"
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label>Unit</label>
+
+                    <select id="productUnit">
+
+                        <option value="">
+                            Select unit
+                        </option>
+
+                        <option value="pcs">
+                            pcs
+                        </option>
+
+                        <option value="kg">
+                            kg
+                        </option>
+
+                        <option value="litre">
+                            litre
+                        </option>
+
+                        <option value="box">
+                            box
+                        </option>
+
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label>Initial Stock</label>
+
+                    <input
+                        type="number"
+                        id="initialStock"
+                        min="0"
+                        placeholder="Enter stock"
+                    >
+                </div>
+
+            </div>
+
+
+            <div class="form-buttons">
+
+                <button
+                    class="save-btn"
+                    onclick="addProduct()"
+                >
+                    Add Product
+                </button>
+
+                <button
+                    class="cancel-btn"
+                    onclick="hideAddProduct()"
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- SEARCH -->
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="🔍 Search products by name or SKU..."
+                onkeyup="searchProducts()"
+            >
+
+        </div>
+
+
+        <!-- PRODUCT TABLE -->
+        <div class="table-card">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Product Name</th>
+                        <th>SKU</th>
+                        <th>Category</th>
+                        <th>Unit</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="productTable">
+
+                    <tr>
+                        <td>Steel Rods</td>
+                        <td>ST-001</td>
+                        <td>Raw Material</td>
+                        <td>kg</td>
+                        <td class="stock">100</td>
+                        <td class="good">● In Stock</td>
+                    </tr>
+
+
+                    <tr>
+                        <td>Office Chairs</td>
+                        <td>CH-001</td>
+                        <td>Furniture</td>
+                        <td>pcs</td>
+                        <td class="stock">50</td>
+                        <td class="good">● In Stock</td>
+                    </tr>
+
+
+                    <tr>
+                        <td>Wooden Tables</td>
+                        <td>TB-001</td>
+                        <td>Furniture</td>
+                        <td>pcs</td>
+                        <td class="stock">25</td>
+                        <td class="low">● Low Stock</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /* SHOW FORM */
+
+        function showAddProduct() {
+
+            document.getElementById("addProductForm").style.display =
+                "block";
+        }
+
+
+        /* HIDE FORM */
+
+        function hideAddProduct() {
+
+            document.getElementById("addProductForm").style.display =
+                "none";
+        }
+
+
+        /* ADD PRODUCT */
+
+        function addProduct() {
+
+            const name =
+                document.getElementById("productName").value.trim();
+
+            const sku =
+                document.getElementById("productSKU").value.trim();
+
+            const category =
+                document.getElementById("productCategory").value.trim();
+
+            const unit =
+                document.getElementById("productUnit").value;
+
+            const stock =
+                document.getElementById("initialStock").value;
+
+
+            /* CHECK FIELDS */
+
+            if (!name || !sku || !category || !unit || stock === "") {
+
+                alert("Please fill all product details.");
+
+                return;
+            }
+
+
+            /* CHECK STOCK */
+
+            if (Number(stock) < 0) {
+
+                alert("Stock cannot be negative.");
+
+                return;
+            }
+
+
+            /* STATUS */
+
+            let statusText;
+            let statusClass;
+
+            if (Number(stock) <= 25) {
+
+                statusText = "● Low Stock";
+                statusClass = "low";
+
+            } else {
+
+                statusText = "● In Stock";
+                statusClass = "good";
+
+            }
+
+
+            /* ADD TABLE ROW */
+
+            const table =
+                document.getElementById("productTable");
+
+            const row =
+                table.insertRow();
+
+
+            row.innerHTML = `
+
+                <td>${name}</td>
+
+                <td>${sku}</td>
+
+                <td>${category}</td>
+
+                <td>${unit}</td>
+
+                <td class="stock">${stock}</td>
+
+                <td class="${statusClass}">
+                    ${statusText}
+                </td>
+
+            `;
+
+
+            /* CLEAR FORM */
+
+            document.getElementById("productName").value = "";
+
+            document.getElementById("productSKU").value = "";
+
+            document.getElementById("productCategory").value = "";
+
+            document.getElementById("productUnit").value = "";
+
+            document.getElementById("initialStock").value = "";
+
+
+            /* HIDE FORM */
+
+            hideAddProduct();
+
+        }
+
+
+        /* SEARCH PRODUCTS */
+
+        function searchProducts() {
+
+            const search =
+                document.getElementById("searchInput")
+                .value
+                .toLowerCase();
+
+
+            const rows =
+                document
+                .getElementById("productTable")
+                .getElementsByTagName("tr");
+
+
+            for (let i = 0; i < rows.length; i++) {
+
+                const productName =
+                    rows[i].cells[0].innerText.toLowerCase();
+
+                const sku =
+                    rows[i].cells[1].innerText.toLowerCase();
+
+
+                if (
+                    productName.includes(search) ||
+                    sku.includes(search)
+                ) {
+
+                    rows[i].style.display = "";
+
+                } else {
+
+                    rows[i].style.display = "none";
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
 
