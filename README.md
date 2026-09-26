@@ -611,3 +611,287 @@ Smart inventory management system built for the Odoo Hackathon.
 </html>
 </html>
 ```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StockSense - Products</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 230px;
+            height: 100vh;
+            background: #172033;
+            color: white;
+            padding: 25px 15px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo span {
+            color: #4f8cff;
+        }
+
+        .menu a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 13px 15px;
+            margin: 6px 0;
+            border-radius: 8px;
+        }
+
+        .menu a:hover,
+        .menu .active {
+            background: #2d3b55;
+            color: white;
+        }
+
+        /* Main area */
+        .main {
+            margin-left: 230px;
+            padding: 35px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            font-size: 30px;
+        }
+
+        .add-btn {
+            background: #4f8cff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .add-btn:hover {
+            background: #3575df;
+        }
+
+        /* Search */
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d8dee9;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        /* Table */
+        .table-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f1f5f9;
+            text-align: left;
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #edf0f5;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .stock {
+            font-weight: bold;
+        }
+
+        .good {
+            color: #16a34a;
+        }
+
+        .low {
+            color: #f59e0b;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .sidebar {
+                width: 180px;
+            }
+
+            .main {
+                margin-left: 180px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <div class="logo">
+            Stock<span>Sense</span>
+        </div>
+
+        <div class="menu">
+
+            <a href="dashboard.html">🏠 Dashboard</a>
+
+            <a href="products.html">
+                📦 Products
+            </a>
+
+            <a href="receipts.html>">📥 Receipts</a>
+
+            <a href="#">📤 Deliveries</a>
+
+            <a href="#">🔄 Transfers</a>
+
+            <a href="#">📝 Adjustments</a>
+
+            <a href="#">📊 Stock Ledger</a>
+
+            <a href="#">🏭 Warehouse</a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <div class="topbar">
+
+            <div>
+                <h1>Products</h1>
+                <p>Manage your inventory products</p>
+            </div>
+
+            <button class="add-btn">
+                + Add Product
+            </button>
+
+        </div>
+
+
+        <!-- Search -->
+        <div class="search-box">
+
+            <input
+                type="text"
+                placeholder="🔍 Search products by name or SKU..."
+            >
+
+        </div>
+
+
+        <!-- Product Table -->
+        <div class="table-card">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Product Name</th>
+                        <th>SKU</th>
+                        <th>Category</th>
+                        <th>Unit</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Steel Rods</td>
+                        <td>ST-001</td>
+                        <td>Raw Material</td>
+                        <td>kg</td>
+                        <td class="stock">100</td>
+                        <td class="good">● In Stock</td>
+                    </tr>
+
+                    <tr>
+                        <td>Office Chairs</td>
+                        <td>CH-001</td>
+                        <td>Furniture</td>
+                        <td>pcs</td>
+                        <td class="stock">50</td>
+                        <td class="good">● In Stock</td>
+                    </tr>
+
+                    <tr>
+                        <td>Wooden Tables</td>
+                        <td>TB-001</td>
+                        <td>Furniture</td>
+                        <td>pcs</td>
+                        <td class="stock">25</td>
+                        <td class="low">● Low Stock</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
+
