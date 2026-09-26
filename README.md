@@ -1,14 +1,271 @@
 # smart_intventary_hackathon
 Smart inventory management system built for the Odoo Hackathon.
-'''html
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>StockSense - Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f4f7fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 900px;
+            max-width: 95%;
+            min-height: 520px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Left Section */
+        .left-section {
+            width: 50%;
+            background: #1e3a8a;
+            color: white;
+            padding: 60px 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .left-section h1 {
+            font-size: 38px;
+            margin-bottom: 20px;
+        }
+
+        .left-section p {
+            font-size: 17px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .stock-icon {
+            font-size: 70px;
+            margin-top: 35px;
+        }
+
+        /* Right Section */
+        .right-section {
+            width: 50%;
+            padding: 60px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-section h2 {
+            font-size: 30px;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #1e3a8a;
+        }
+
+        .forgot {
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .forgot a {
+            color: #1e3a8a;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background: #172e6b;
+        }
+
+        .signup {
+            text-align: center;
+            margin-top: 25px;
+            color: #6b7280;
+        }
+
+        .signup a {
+            color: #1e3a8a;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* Mobile */
+        @media (max-width: 700px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-section,
+            .right-section {
+                width: 100%;
+            }
+
+            .left-section {
+                padding: 35px;
+            }
+
+            .right-section {
+                padding: 40px 30px;
+            }
+
+            .stock-icon {
+                display: none;
+            }
+        }
+    </style>
 </head>
+
 <body>
+
+    <div class="container">
+
+        <!-- Left Side -->
+        <div class="left-section">
+
+            <div class="logo">📦 StockSense</div>
+
+            <h1>Smart Inventory Management</h1>
+
+            <p>
+                Manage your products, stock, receipts, deliveries
+                and warehouse operations from one simple dashboard.
+            </p>
+
+            <div class="stock-icon">
+                📊 📦
+            </div>
+
+        </div>
+
+        <!-- Right Side -->
+        <div class="right-section">
+
+            <h2>Welcome Back!</h2>
+
+            <p class="subtitle">
+                Login to your StockSense account
+            </p>
+
+            <form onsubmit="login(event)">
+
+                <label for="email">Email</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label for="password">Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <div class="forgot">
+                    <a href="#">Forgot Password?</a>
+                </div>
+
+                <button class="login-btn" type="submit">
+                    Login
+                </button>
+
+            </form>
+
+            <p class="signup">
+                Don't have an account?
+                <a href="#">Sign Up</a>
+            </p>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        function login(event) {
+
+            event.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            if (email && password) {
+
+                alert("Login successful!");
+
+                // Later we will redirect to dashboard here.
+                window.location.href = "dashboard.html";
+
+            }
+        }
+
+    </script>
 
 </body>
 </html>
+```
