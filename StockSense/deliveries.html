@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StockSense - Deliveries</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 277px;
+            height: 100vh;
+            background: #172033;
+            padding: 30px 16px;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+            padding: 0 28px;
+            margin-bottom: 45px;
+        }
+
+        .logo span {
+            color: #4f8cff;
+        }
+
+        .menu a {
+            display: block;
+            color: #dbe5f5;
+            text-decoration: none;
+            padding: 14px 20px;
+            margin: 6px 0;
+            border-radius: 9px;
+            font-size: 20px;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #33415f;
+            color: white;
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 277px;
+            padding: 35px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            font-size: 30px;
+        }
+
+        .topbar p {
+            margin-top: 7px;
+            color: #6b7280;
+        }
+
+        .profile {
+            background: white;
+            padding: 12px 18px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        /* PANEL */
+        .panel {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+        }
+
+        .panel h2 {
+            margin-bottom: 20px;
+        }
+
+        /* FORM */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+        }
+
+        button {
+            margin-top: 20px;
+            background: #4f8cff;
+            color: white;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background: #3978e8;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f1f5f9;
+            text-align: left;
+            padding: 14px;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+
+        .status {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .validated {
+            background: #e8f7ee;
+            color: #15803d;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="logo">
+            Stock<span>Sense</span>
+        </div>
+
+        <div class="menu">
+
+            <a href="dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="products.html">
+                📦 Products
+            </a>
+
+            <a href="receipts.html">
+                📥 Receipts
+            </a>
+
+            <a href="deliveries.html" class="active">
+                📤 Deliveries
+            </a>
+
+            <a href="transfers.html">
+                🔄 Transfers
+            </a>
+
+            <a href="adjustments.html">
+                📝 Adjustments
+            </a>
+
+            <a href="ledger.html">
+                📊 Stock Ledger
+            </a>
+
+            <a href="warehouse.html">
+                🏭 Warehouse
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <div class="topbar">
+
+            <div>
+                <h1>Deliveries</h1>
+                <p>Deliver products and reduce available stock.</p>
+            </div>
+
+            <div class="profile">
+                Inventory Manager
+            </div>
+
+        </div>
+
+
+        <!-- CREATE DELIVERY -->
+        <div class="panel">
+
+            <h2>Create Delivery</h2>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>Customer</label>
+
+                    <input
+                        type="text"
+                        id="customer"
+                        placeholder="Enter customer name"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Product</label>
+
+                    <select id="product">
+
+                        <option value="">
+                            Select product
+                        </option>
+
+                        <option value="Steel Rods">
+                            Steel Rods
+                        </option>
+
+                        <option value="Office Chairs">
+                            Office Chairs
+                        </option>
+
+                        <option value="Wooden Tables">
+                            Wooden Tables
+                        </option>
+
+                        <option value="Copper Wire">
+                            Copper Wire
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Quantity</label>
+
+                    <input
+                        type="number"
+                        id="quantity"
+                        min="1"
+                        placeholder="Enter quantity"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <button onclick="validateDelivery()">
+                Validate Delivery
+            </button>
+
+        </div>
+
+
+        <!-- DELIVERY RECORDS -->
+        <div class="panel">
+
+            <h2>Delivery Records</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Customer</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="deliveryTable">
+
+                    <tr>
+
+                        <td>ABC Company</td>
+
+                        <td>Office Chairs</td>
+
+                        <td>10</td>
+
+                        <td>
+                            <span class="status validated">
+                                Validated
+                            </span>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script>
+
+        function validateDelivery() {
+
+            const customer =
+                document.getElementById("customer").value.trim();
+
+            const product =
+                document.getElementById("product").value;
+
+            const quantity =
+                document.getElementById("quantity").value;
+
+
+            if (!customer || !product || !quantity) {
+
+                alert("Please fill all delivery details.");
+
+                return;
+            }
+
+
+            if (Number(quantity) <= 0) {
+
+                alert("Quantity must be greater than 0.");
+
+                return;
+            }
+
+
+            const table =
+                document.getElementById("deliveryTable");
+
+            const row =
+                table.insertRow();
+
+
+            row.innerHTML = `
+
+                <td>${customer}</td>
+
+                <td>${product}</td>
+
+                <td>${quantity}</td>
+
+                <td>
+                    <span class="status validated">
+                        Validated
+                    </span>
+                </td>
+
+            `;
+
+
+            document.getElementById("customer").value = "";
+
+            document.getElementById("product").value = "";
+
+            document.getElementById("quantity").value = "";
+
+        }
+
+    </script>
+
+</body>
+</html>

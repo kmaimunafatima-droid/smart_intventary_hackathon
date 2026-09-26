@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StockSense - Adjustments</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 230px;
+            height: 100vh;
+            background: #111827;
+            padding: 30px 20px;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 45px;
+            text-align: center;
+        }
+
+        .logo span {
+            color: #4f8cff;
+        }
+
+        .menu a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 13px 15px;
+            margin: 6px 0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #2d3b55;
+            color: white;
+        }
+
+        /* MAIN */
+
+        .main {
+            margin-left: 230px;
+            padding: 35px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            font-size: 36px;
+            color: #172033;
+        }
+
+        .topbar p {
+            margin-top: 5px;
+            color: #64748b;
+            font-size: 18px;
+        }
+
+        /* BUTTON */
+
+        .btn {
+            background: #4f8cff;
+            color: white;
+            border: none;
+            padding: 15px 22px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #3678ed;
+        }
+
+        /* SEARCH */
+
+        .search-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .search {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #d5dce8;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        /* TABLE */
+
+        .table-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #eef2f7;
+            text-align: left;
+            padding: 18px;
+            font-size: 16px;
+        }
+
+        td {
+            padding: 18px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .increase {
+            color: #15803d;
+            font-weight: bold;
+        }
+
+        .decrease {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            Stock<span>Sense</span>
+        </div>
+
+        <div class="menu">
+
+            <a href="dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="products.html">
+                📦 Products
+            </a>
+
+            <a href="receipts.html">
+                📥 Receipts
+            </a>
+
+            <a href="deliveries.html">
+                📤 Deliveries
+            </a>
+
+            <a href="transfers.html">
+                🔄 Transfers
+            </a>
+
+            <a href="adjustments.html" class="active">
+                📝 Adjustments
+            </a>
+
+            <a href="ledger.html">
+                📊 Stock Ledger
+            </a>
+
+            <a href="warehouse.html">
+                🏭 Warehouse
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+
+    <div class="main">
+
+
+        <!-- TOP BAR -->
+
+        <div class="topbar">
+
+            <div>
+
+                <h1>
+                    Inventory Adjustments
+                </h1>
+
+                <p>
+                    Correct physical stock differences
+                </p>
+
+            </div>
+
+
+            <!-- WORKING BUTTON -->
+
+            <button
+                class="btn"
+                onclick="window.location.href='new-adjustment.html'"
+            >
+                + New Adjustment
+            </button>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-card">
+
+            <input
+                class="search"
+                id="adjustmentSearch"
+                type="text"
+                placeholder="🔎 Search adjustments..."
+            >
+
+        </div>
+
+
+        <!-- TABLE -->
+
+        <div class="table-card">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Adjustment No.
+                        </th>
+
+                        <th>
+                            Product
+                        </th>
+
+                        <th>
+                            Recorded Stock
+                        </th>
+
+                        <th>
+                            Physical Count
+                        </th>
+
+                        <th>
+                            Difference
+                        </th>
+
+                        <th>
+                            Location
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <tr>
+
+                        <td>
+                            ADJ-001
+                        </td>
+
+                        <td>
+                            Steel Rods
+                        </td>
+
+                        <td>
+                            100 kg
+                        </td>
+
+                        <td>
+                            97 kg
+                        </td>
+
+                        <td class="decrease">
+                            -3 kg
+                        </td>
+
+                        <td>
+                            Main Warehouse
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            ADJ-002
+                        </td>
+
+                        <td>
+                            Office Chairs
+                        </td>
+
+                        <td>
+                            50 pcs
+                        </td>
+
+                        <td>
+                            52 pcs
+                        </td>
+
+                        <td class="increase">
+                            +2 pcs
+                        </td>
+
+                        <td>
+                            Warehouse 2
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            ADJ-003
+                        </td>
+
+                        <td>
+                            Wooden Tables
+                        </td>
+
+                        <td>
+                            25 pcs
+                        </td>
+
+                        <td>
+                            24 pcs
+                        </td>
+
+                        <td class="decrease">
+                            -1 pcs
+                        </td>
+
+                        <td>
+                            Production Rack
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- JAVASCRIPT FILE -->
+
+    <script src="script.js"></script> 
+    
+    <script>
+
+    const adjustments =
+        JSON.parse(localStorage.getItem("adjustments")) || [];
+
+    const tableBody =
+        document.querySelector("table tbody");
+
+    adjustments.forEach(function(adjustment) {
+
+        const row =
+            document.createElement("tr");
+
+        const differenceClass =
+            adjustment.difference >= 0
+                ? "increase"
+                : "decrease";
+
+        const differenceSign =
+            adjustment.difference > 0
+                ? "+"
+                : "";
+
+        row.innerHTML = `
+            <td>${adjustment.number}</td>
+            <td>${adjustment.product}</td>
+            <td>${adjustment.recordedStock}</td>
+            <td>${adjustment.physicalCount}</td>
+            <td class="${differenceClass}">
+                ${differenceSign}${adjustment.difference}
+            </td>
+            <td>${adjustment.location}</td>
+        `;
+
+        tableBody.appendChild(row);
+
+    });
+
+</script>
+
+
+</body>
+
+</html>
